@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Notifications</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('dashboard') }}" class="px-4 py-2 hover:bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Notifications</h2>
+
+        <ul class="mt-6">
+            <li class="border-b py-2">New student registered: John Doe <button class="text-blue-500">Mark as Read</button></li>
+            <li class="border-b py-2">Assignment deadline approaching for Course 101 <button class="text-blue-500">Mark as Read</button></li>
+        </ul>
+
+        <button class="bg-red-500 text-white font-bold p-2 rounded mt-4">Clear All Notifications</button>
+    </div>
+</div>
+{% endblock %}

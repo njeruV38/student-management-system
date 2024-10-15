@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Course Details - Student Management System{% endblock %}
+
+{% block content %} 
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Course Details</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">{{ course.title }}</h2>
+        <p class="mt-4">{{ course.description }}</p>
+
+        <div class="mt-8">
+            <h3 class="text-xl font-bold">Instructor: {{ instructor.name }}</h3>
+            <p>{{ instructor.bio }}</p>
+            <p>Email: <a href="mailto:{{ instructor.email }}" class="text-blue-600">{{ instructor.email }}</a></p>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Course Schedule</h3>
+            <p>{{ course.schedule }}</p>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Enrollment Status</h3>
+            <p>{{ enrolled_students }} / {{ course.max_capacity }} students enrolled</p>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Course Resources</h3>
+            <ul class="list-disc pl-5 mt-2">
+                {% for resource in course.resources %}
+                <li><a href="{{ resource.link }}" class="text-blue-600 underline">{{ resource.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="mt-8">
+            <button class="bg-green-600 text-white font-bold hover:bg-green-700 p-2" onclick="enrollCourse()">Enroll</button>
+            <button class="bg-red-600 text-white font-bold hover:bg-red-700 p-2" onclick="dropCourse()">Drop</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function enrollCourse() {
+        // Implement the enrollment functionality here
+        alert('You have been enrolled in the course!');
+    }
+
+    function dropCourse() {
+        // Implement the dropping functionality here
+        alert('You have dropped the course.');
+    }
+</script>
+
+{% endblock %}

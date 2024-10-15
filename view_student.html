@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}View Students - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+
+    <!-- Sidebar -->
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Students List</h2>
+        <p class="mt-4">Below is the list of registered students.</p>
+
+        <!-- Search Bar -->
+        <div class="mt-6 mb-4">
+            <input type="text" placeholder="Search by name or email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="overflow-x-auto">
+            {% if students|length > 0 %}
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr class="w-full bg-gray-200 text-gray-700">
+                        <th class="py-2 px-4 text-left">Name</th>
+                        <th class="py-2 px-4 text-left">Email</th>
+                        <th class="py-2 px-4 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4">{{ student.name }}</td>
+                        <td class="py-2 px-4">{{ student.email }}</td>
+                        <td class="py-2 px-4">
+                            <a href="{{ url_for('edit_student', id=student.id) }}" class="text-blue-600 underline">Edit</a> |
+                            <a href="{{ url_for('delete_student', id=student.id) }}" class="text-red-600 underline">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="text-gray-500 mt-4">No students found.</p>
+            {% endif %}
+        </div>
+        
+        <div class="mt-8">
+            <a href="{{ url_for('add_student') }}" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2">Add New Student</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

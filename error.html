@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Error - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full p-8 bg-white font-family-karla">
+    <h2 class="text-3xl font-bold text-red-600">Oops! Something went wrong.</h2>
+    
+    <div class="flex items-center mt-4">
+        <img src="error-icon.png" alt="Error Icon" class="w-16 h-16 mr-4">
+        <p class="text-lg">Sorry, an error occurred while processing your request.</p>
+    </div>
+    
+    <p class="mt-4">Here are a few things you can try:</p>
+    <ul class="list-disc pl-5 mt-2">
+        <li>Check your internet connection.</li>
+        <li>Make sure you are using the correct URLs.</li>
+        <li>Return to the <a href="{{ url_for('index') }}" class="text-blue-600 underline">home page</a>.</li>
+        <li>If you're looking for a student, try the <a href="{{ url_for('view_students') }}" class="text-blue-600 underline">View Students</a> page.</li>
+        <li>If the problem persists, please <a href="{{ url_for('contact_support') }}" class="text-blue-600 underline">contact support</a>.</li>
+    </ul>
+    
+    <p class="mt-4">You can also go back to your <a href="{{ url_for('dashboard') }}" class="text-blue-600 underline">Dashboard</a>.</p>
+    
+    <!-- Optional: Search Bar -->
+    <div class="mt-8">
+        <h3 class="text-xl font-bold">Search for Help:</h3>
+        <form action="{{ url_for('search') }}" method="GET" class="flex mt-2">
+            <input type="text" name="query" placeholder="Search..." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded ml-2">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

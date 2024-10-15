@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="hero relative bg-cover bg-center h-screen" style="background-image: url('{{ url_for('static', filename='background.jpg') }}');">
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+    <div class="hero-content relative flex flex-col items-center justify-center h-full text-white">
+        <h2 class="text-5xl font-bold">Welcome to the Student Management System</h2>
+        <p class="text-xl my-4">Your one-stop solution for managing student records effectively.</p>
+        <a href="{{ url_for('add_student') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Student</a>
+        <a href="{{ url_for('view_students') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4">View Students</a>
+    </div>
+</div>
+
+<section class="features bg-gray-100 py-10">
+    <div class="container mx-auto text-center">
+        <h3 class="text-3xl font-bold">Features</h3>
+        <div class="feature-grid grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div class="feature bg-white p-6 rounded shadow hover:shadow-lg transition-transform transform hover:scale-105">
+                <i class="fas fa-user-graduate fa-2x text-blue-500"></i>
+                <h4 class="text-xl font-semibold mt-4">Manage Students</h4>
+                <p>Add, update, and delete student records with ease.</p>
+            </div>
+            <div class="feature bg-white p-6 rounded shadow hover:shadow-lg transition-transform transform hover:scale-105">
+                <i class="fas fa-book fa-2x text-green-500"></i>
+                <h4 class="text-xl font-semibold mt-4">Course Management</h4>
+                <p>Organize courses and assign them to students efficiently.</p>
+            </div>
+            <div class="feature bg-white p-6 rounded shadow hover:shadow-lg transition-transform transform hover:scale-105">
+                <i class="fas fa-chart-line fa-2x text-purple-500"></i>
+                <h4 class="text-xl font-semibold mt-4">Performance Tracking</h4>
+                <p>Keep track of student performance and progress.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="statistics py-10 bg-gray-200">
+    <div class="container mx-auto text-center">
+        <h3 class="text-3xl font-bold">Key Statistics</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+            <div class="stat bg-white p-6 rounded shadow">
+                <h4 class="text-2xl font-semibold">500+</h4>
+                <p>Students Enrolled</p>
+            </div>
+            <div class="stat bg-white p-6 rounded shadow">
+                <h4 class="text-2xl font-semibold">30+</h4>
+                <p>Courses Offered</p>
+            </div>
+            <div class="stat bg-white p-6 rounded shadow">
+                <h4 class="text-2xl font-semibold">100%</h4>
+                <p>Positive Feedback</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials py-10">
+    <div class="container mx-auto text-center">
+        <h3 class="text-3xl font-bold">What Our Users Say</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="testimonial bg-white p-6 rounded shadow">
+                <p>"This system has transformed how we manage our students!"</p>
+                <cite>- Principal John Doe</cite>
+            </div>
+            <div class="testimonial bg-white p-6 rounded shadow">
+                <p>"An intuitive and efficient tool for our school's needs."</p>
+                <cite>- Teacher Jane Smith</cite>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; 2024 Student Management System | <a href="#" class="underline">Privacy Policy</a> | <a href="#" class="underline">Terms of Service</a></p>
+</footer>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Courses - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+
+    <!-- Sidebar -->
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('add_student') }}" class="px-4 py-2 hover:bg-gray-700">Add Student</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Manage Courses</h2>
+        <p class="mt-4">Manage the courses offered at your institution.</p>
+
+        <div class="flex justify-between items-center mt-6">
+            <input type="text" id="course-search" placeholder="Search courses..." class="border rounded py-2 px-3 w-1/3" />
+            <a href="{{ url_for('add_course') }}" class="bg-black text-white font-bold p-2">Add New Course</a>
+        </div>
+
+        <!-- Notification Area -->
+        {% if message %}
+        <div class="mt-4 p-3 bg-green-200 text-green-800 rounded">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <!-- Courses Table -->
+        <table class="min-w-full mt-6">
+            <thead>
+                <tr>
+                    <th class="border-b py-2">Course Name</th>
+                    <th class="border-b py-2">Course Code</th>
+                    <th class="border-b py-2">Credits</th>
+                    <th class="border-b py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="courses-table">
+                {% for course in courses %}
+                <tr class="hover:bg-gray-100">
+                    <td class="border-b py-2">{{ course.name }}</td>
+                    <td class="border-b py-2">{{ course.code }}</td>
+                    <td class="border-b py-2">{{ course.credits }}</td>
+                    <td class="border-b py-2">
+                        <a href="{{ url_for('edit_course', course_id=course.id) }}" class="text-blue-600 hover:underline">Edit</a>
+                        <a href="{{ url_for('delete_course', course_id=course.id) }}" class="text-red-600 hover:underline ml-4">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mt-6">
+            <a href="{{ url_for('view_students') }}" class="text-blue-600 underline">Back to Students List</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript for searching/filtering courses
+    const searchInput = document.getElementById('course-search');
+    const coursesTable = document.getElementById('courses-table');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const rows = coursesTable.getElementsByTagName('tr');
+        
+        Array.from(rows).forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            let rowContainsSearchTerm = false;
+            for (let cell of cells) {
+                if (cell) {
+                    const cellText = cell.textContent.toLowerCase();
+                    if (cellText.includes(searchTerm)) {
+                        rowContainsSearchTerm = true;
+                        break;
+                    }
+                }
+            }
+            row.style.display = rowContainsSearchTerm ? '' : 'none';
+        });
+    });
+</script>
+
+{% endblock %}

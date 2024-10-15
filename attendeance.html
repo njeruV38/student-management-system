@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Attendance</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('dashboard') }}" class="px-4 py-2 hover:bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Attendance Management</h2>
+
+        <form class="mt-6" method="POST" action="{{ url_for('mark_attendance') }}">
+            <label for="class" class="block">Select Class:</label>
+            <select id="class" name="class" class="border rounded p-2 w-full">
+                <option value="">Choose a class</option>
+                {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="dateRange" class="block mt-4">Select Date Range:</label>
+            <input type="date" id="startDate" name="start_date" class="border rounded p-2 w-full" required>
+            <input type="date" id="endDate" name="end_date" class="border rounded p-2 w-full mt-2" required>
+
+            <button type="submit" class="bg-black text-white font-bold p-2 rounded mt-4">View Attendance</button>
+        </form>
+
+        <h3 class="text-xl mt-6">Attendance List:</h3>
+        <form method="POST" action="{{ url_for('submit_attendance') }}" class="mt-4">
+            <table class="min-w-full mt-4">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border px-4 py-2">Student Name</th>
+                        <th class="border px-4 py-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ student.name }}</td>
+                        <td class="border px-4 py-2">
+                            <select name="attendance_status[{{ student.id }}]" class="border rounded p-1">
+                                <option value="present">Present</option>
+                                <option value="absent">Absent</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="bg-green-500 text-white font-bold p-2 rounded mt-4">Submit Attendance</button>
+        </form>
+
+        <h3 class="text-xl mt-6">Summary:</h3>
+        <p>Total Students: {{ total_students }}</p>
+        <p>Present: {{ total_present }}</p>
+        <p>Absent: {{ total_absent }}</p>
+        <p>Attendance Percentage: {{ attendance_percentage }}%</p>
+
+        <h3 class="text-xl mt-6">Download Attendance:</h3>
+        <button id="download-csv" class="bg-blue-500 text-white font-bold p-2 rounded mt-2">Export as CSV</button>
+        <button id="download-pdf" class="bg-blue-500 text-white font-bold p-2 rounded mt-2">Export as PDF</button>
+
+        <h3 class="text-xl mt-6">Visual Attendance Graph:</h3>
+        <canvas id="attendance-chart" class="mt-4" width="400" height="200"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js for visual representation -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Example data for attendance graph
+    const ctx = document.getElementById('attendance-chart').getContext('2d');
+    const attendanceData = {
+        labels: ['Jan', 'Feb', 'Mar'], // Example months
+        datasets: [{
+            label: 'Attendance Percentage',
+            data: [90, 80, 85], // Example data
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const attendanceChart = new Chart(ctx, {
+        type: 'bar',
+        data: attendanceData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Percentage'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Months'
+                    }
+                }
+            }
+        }
+    });
+
+    // Download Attendance Records as CSV
+    document.getElementById('download-csv').addEventListener('click', function () {
+        // Implement CSV download logic
+        alert('CSV download feature is not yet implemented.');
+    });
+
+    // Download Attendance Records as PDF
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        // Implement PDF download logic
+        alert('PDF download feature is not yet implemented.');
+    });
+</script>
+{% endblock %}

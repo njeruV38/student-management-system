@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Student Profile - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Student Profile</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">{{ student.name }}</h2>
+        <p class="mt-2">Email: <a href="mailto:{{ student.email }}" class="text-blue-600">{{ student.email }}</a></p>
+        <p>Enrollment Date: {{ student.enrollment_date }}</p>
+        
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Courses Enrolled:</h3>
+            <ul class="list-disc pl-5 mt-2">
+                {% for course in student.courses %}
+                <li><a href="{{ url_for('course_details', course_id=course.id) }}" class="text-blue-600 underline">{{ course.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Contact Information:</h3>
+            <p>Phone: {{ student.phone }}</p>
+            <p>Address: {{ student.address }}</p>
+        </div>
+
+        <div class="mt-8">
+            <a href="{{ url_for('edit_student_profile', student_id=student.id) }}" class="bg-blue-600 text-white font-bold hover:bg-blue-700 p-2">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

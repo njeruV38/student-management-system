@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Settings</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Account Settings</h2>
+        
+        <form class="mt-8" method="POST" action="{{ url_for('update_settings') }}">
+            <div class="flex flex-col mb-4">
+                <label for="name" class="text-lg">Name</label>
+                <input type="text" id="name" value="{{ user.name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex flex-col mb-4">
+                <label for="email" class="text-lg">Email</label>
+                <input type="email" id="email" value="{{ user.email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex flex-col mb-4">
+                <label for="password" class="text-lg">Change Password</label>
+                <input type="password" id="password" placeholder="New Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex flex-col mb-4">
+                <label for="confirm-password" class="text-lg">Confirm New Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <input type="submit" value="Update Settings" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-4">
+        </form>
+
+        <div class="mt-8">
+            <h3 class="text-lg font-bold">Notification Preferences</h3>
+            <label class="flex items-center mt-4">
+                <input type="checkbox" class="form-checkbox h-5 w-5 text-black" checked>
+                <span class="ml-2">Receive email notifications</span>
+            </label>
+
+            <h3 class="text-lg font-bold mt-8">Delete Account</h3>
+            <button class="bg-red-600 text-white font-bold text-lg hover:bg-red-700 p-2 mt-4" onclick="confirmDelete()">Delete Account</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            // Redirect to account deletion route
+            window.location.href = "{{ url_for('delete_account') }}";
+        }
+    }
+</script>
+
+{% endblock %}

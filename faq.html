@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">FAQ</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('dashboard') }}" class="px-4 py-2 hover:bg-gray-700">Dashboard</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Frequently Asked Questions</h2>
+
+        <form class="mt-6">
+            <input type="text" placeholder="Search FAQs..." class="border rounded p-2 w-full">
+            <button type="submit" class="bg-black text-white font-bold p-2 rounded mt-4">Search</button>
+        </form>
+
+        <div class="mt-6">
+            <h3 class="text-lg font-bold">What is this system?</h3>
+            <p>This system helps manage student records, courses, and attendance.</p>
+
+            <h3 class="text-lg font-bold mt-4">How do I reset my password?</h3>
+            <p>You can reset your password from the settings page.</p>
+
+            <h3 class="text-lg font-bold mt-4">Who do I contact for support?</h3>
+            <p>If you have any questions, feel free to <a href="{{ url_for('contact_support') }}" class="text-blue-500">contact support</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Add Student - Student Management System{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full flex flex-wrap">
+
+    <!-- Sidebar -->
+    <div class="w-full md:w-1/4 bg-gray-800 text-white flex flex-col h-screen">
+        <div class="flex items-center justify-center h-16 bg-black">
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a href="{{ url_for('view_students') }}" class="px-4 py-2 hover:bg-gray-700">View Students</a>
+            <a href="{{ url_for('manage_courses') }}" class="px-4 py-2 hover:bg-gray-700">Manage Courses</a>
+            <a href="{{ url_for('settings') }}" class="px-4 py-2 hover:bg-gray-700">Settings</a>
+            <a href="{{ url_for('logout') }}" class="px-4 py-2 hover:bg-gray-700">Logout</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-full md:w-3/4 p-8 bg-white font-family-karla">
+        <h2 class="text-3xl font-bold">Add New Student</h2>
+        <p class="mt-4">Fill in the details below to register a new student.</p>
+
+        <form class="flex flex-col pt-6" method="POST" action="{{ url_for('create_student') }}">
+            <div class="flex flex-col pt-4">
+                <label for="name" class="text-lg">Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Smith" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="email" class="text-lg">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="password" class="text-lg">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-gray-500 text-sm">Password must be at least 8 characters long and contain a special character.</span>
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="confirm-password" class="text-lg">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm_password" required placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="dob" class="text-lg">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <div class="flex flex-col pt-4">
+                <label for="profile-picture" class="text-lg">Profile Picture</label>
+                <input type="file" id="profile-picture" name="profile_picture" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <div class="flex items-center mt-4">
+                <input type="checkbox" id="terms" name="terms" required class="mr-2" />
+                <label for="terms" class="text-sm">I accept the terms and conditions</label>
+            </div>
+
+            <input type="submit" value="Add Student" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8" />
+        </form>
+
+        <div class="mt-6">
+            <a href="{{ url_for('view_students') }}" class="text-blue-600 underline">Back to Students List</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript for password visibility toggle (optional)
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+
+    passwordInput.addEventListener('input', function() {
+        const value = passwordInput.value;
+        // Add password strength checking logic here if needed
+    });
+
+    confirmPasswordInput.addEventListener('input', function() {
+        const value = confirmPasswordInput.value;
+        // Add confirmation password checking logic here if needed
+    });
+</script>
+
+{% endblock %}

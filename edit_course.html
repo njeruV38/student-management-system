@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        /* Custom styles for error and success messages */
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function showConfirmation() {
+            return confirm("Are you sure you want to update this course?");
+        }
+
+        function showNotification(type, message) {
+            const notification = document.getElementById('notification');
+            notification.innerText = message;
+            notification.classList.remove('hidden');
+            notification.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+        }
+    </script>
+</head>
+<body class="bg-white font-family-karla h-screen">
+
+    <div class="w-full flex flex-wrap">
+
+        <!-- Edit Course Section -->
+        <div class="w-full md:w-1/2 flex flex-col">
+
+            <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-12">
+                <a href="#" class="bg-black text-white font-bold text-xl p-4" alt="Logo">Logo</a>
+            </div>
+
+            <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
+                <p class="text-center text-3xl">Edit Course</p>
+
+                <!-- Notification for success or error -->
+                <div id="notification" class="text-center text-white font-bold p-2 mt-4 hidden"></div>
+
+                <form class="flex flex-col pt-3 md:pt-8" action="/edit_course" method="POST" onsubmit="return showConfirmation();">
+                    <input type="hidden" id="course_id" name="course_id" value="{{ course.id }}"> <!-- Hidden field for the course ID -->
+
+                    <div class="flex flex-col pt-4">
+                        <label for="course_name" class="text-lg">Course Name</label>
+                        <input type="text" id="course_name" name="course_name" value="{{ course.name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <p id="name_error" class="text-red-500 hidden">Please enter a valid course name.</p>
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="course_code" class="text-lg">Course Code</label>
+                        <input type="text" id="course_code" name="course_code" value="{{ course.code }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <p id="code_error" class="text-red-500 hidden">Please enter a valid course code.</p>
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="description" class="text-lg">Description</label>
+                        <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" rows="4" required>{{ course.description }}</textarea>
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="category" class="text-lg">Category</label>
+                        <select id="category" name="category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <option value="">Select a category</option>
+                            <option value="Math">Math</option>
+                            <option value="Science">Science</option>
+                            <option value="History">History</option>
+                            <option value="Literature">Literature</option>
+                            <!-- Add more categories as needed -->
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="tags" class="text-lg">Tags (comma separated)</label>
+                        <input type="text" id="tags" name="tags" placeholder="e.g., Algebra, Geometry" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+
+                    <div class="flex flex-col pt-4">
+                        <label for="course_material" class="text-lg">Upload Course Material</label>
+                        <input type="file" id="course_material" name="course_material" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+
+                    <input type="submit" value="Update Course" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
+                </form>
+
+                <div class="text-center pt-12 pb-12">
+                    <p><a href="manage_courses.html" class="underline font-semibold">Back to Manage Courses</a></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-1/2 shadow-2xl">
+            <img class="object-cover w-full h-screen hidden md:block" src="https://source.unsplash.com/IXUM4cJynP0" alt="Background" />
+        </div>
+    </div>
+
+</body>
+</html>

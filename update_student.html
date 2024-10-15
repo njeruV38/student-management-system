@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Update Student - {{ student.name }}{% endblock %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<div class="w-full p-8 bg-white font-family-karla">
+    <h2 class="text-3xl font-bold">Update Profile: {{ student.name }}</h2>
+    <form id="update-student-form" class="mt-4" onsubmit="event.preventDefault(); validateForm();">
+        <div class="flex flex-col mt-4">
+            <label for="name" class="text-lg">Name</label>
+            <input type="text" id="name" value="{{ student.name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <div class="flex flex-col mt-4">
+            <label for="email" class="text-lg">Email</label>
+            <input type="email" id="email" value="{{ student.email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+
+        <div class="flex flex-col mt-4">
+            <label for="phone" class="text-lg">Phone</label>
+            <input type="text" id="phone" value="{{ student.phone }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="flex flex-col mt-4">
+            <label for="profile-pic" class="text-lg">Profile Picture</label>
+            <input type="file" id="profile-pic" class="mt-1">
+            <p class="text-sm text-gray-600">Upload a new profile picture if needed.</p>
+        </div>
+
+        <div class="mt-8">
+            <h3 class="text-xl font-semibold">Enrolled Courses</h3>
+            <ul class="list-disc pl-5 mt-2">
+                {% for course in student.courses %}
+                    <li class="flex justify-between items-center">
+                        <span>{{ course.name }}</span>
+                        <button type="button" class="text-red-500 hover:underline" onclick="removeCourse({{ course.id }})">Remove</button>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="flex flex-col mt-4">
+                <label for="add-course" class="text-lg">Add Course</label>
+                <select id="add-course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">Select a Course</option>
+                    {% for course in available_courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-2" onclick="addCourse()">Add Course</button>
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-8">
+            <button type="submit" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">Save Changes</button>
+            <a href="{{ url_for('student_profile', student_id=student.id) }}" class="bg-gray-300 text-black p-2 rounded hover:bg-gray-400 ml-4">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+
+        // Basic validation
+        if (!name || !email) {
+            alert("Name and Email are required fields.");
+            return;
+        }
+
+        // Submit the form if validation passes
+        document.getElementById('update-student-form').submit();
+    }
+
+    function removeCourse(courseId) {
+        // Implement AJAX or a redirect to remove the course from the student
+        alert(`Course ${courseId} removed from the student.`);
+    }
+
+    function addCourse() {
+        const courseId = document.getElementById('add-course').value;
+        if (courseId) {
+            alert(`Course ${courseId} added to the student.`);
+            // Implement AJAX to add the course for the student
+        } else {
+            alert("Please select a course to add.");
+        }
+    }
+</script>
+{% endblock %}
