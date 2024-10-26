@@ -1,4 +1,4 @@
-Sure! Here’s a sample README for a Student School Management System that includes emojis and is designed to be visually appealing.
+
 
 ```markdown
 # 📚 Student School Management System 🎓
